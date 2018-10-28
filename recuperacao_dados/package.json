@@ -1,0 +1,16 @@
+{
+  "name": "recuperacao_dados",
+  "version": "0.0.1",
+  "description": "Script para a recuperação dos dados de ocorrências de crimes no Brasil",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "download-file": "^0.1.5",
+    "request-promise": "^4.2.2"
+  }
+}
