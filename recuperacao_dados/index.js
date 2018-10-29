@@ -14,12 +14,12 @@ rp(options).then(($) => {
 		let url = $(this).attr('href');
 
 		// Filtrando o nome do arquivo
-		let listNames = url.split('/'); 
+		let listNames = url.split('/');
 		let filename = listNames[listNames.length - 1];
 
 		// Baixando o arquivo
 		download(url, {
-			directory: '../data/',
+			directory: '../dados/',
 			'filename': filename
 		}, function(err) {
 			if (err) {
