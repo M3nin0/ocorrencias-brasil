@@ -1,0 +1,49 @@
+---
+title: "Ocorrências criminais no Brasil"
+author: "Felipe Menino Carlos"
+date: "30 de outubro de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Sobre
+
+Esta análise foi criada como um dos trabalhos da matéria de Laboratório de bancos de dados, da Fatec SJC.
+
+Os dados aqui utilizados foram disponibilizados [aqui](http://dados.gov.br/dataset/sistema-nacional-de-estatisticas-de-seguranca-publica), pelo Sistema Nacional de Estatísticas de Segurança Pública e Justiça Criminal (**SINESPJC**).
+
+Todos os scripts utilizados, tanto para a análise quanto para a aquisição dos dados está disponível no [Github](https://github.com/M3nin0/ocorrencias-brasil), estes foram criados para tornar este documento mais simples.
+
+## Análise dos dados
+
+Todo o processo da análise destes dados foram documentados para a fácil replicão. O processo seguido utiliza ideias gerais de análise exploratória de dados.
+
+Vamos começar carregando os scripts criados para facilitar a análise.
+
+```{r}
+source('data_utils.R');
+source('filter_data.R');
+source('groups.R');
+```
+
+Primeiro vamos tratar de apenas um ano, para depois expandir a análise para todos os dados disponíveis. O ano escolhido foi 2013.
+
+```{r}
+year2013 <- readSpecificYear(2013);
+```
+
+Com os dados carregados vamos olhar como é sua estrutura.
+
+```{r}
+head(year2013);
+```
+
+Agora que conhecemos a estrutura básica, vamos pegar informações de estatísticas gerais destes dados.
+
+```{r}
+summary(year2013);
+```
+

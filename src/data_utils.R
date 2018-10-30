@@ -1,7 +1,6 @@
 '
 Funções para a leitura, limpeza e organização dos dados utilizados
 '
-options(warn = 0); # Removendo warnings
 
 #' Função para tratar as colunas dos dados (Remove a coluna de código do município) e
 #' renomeia as colunas para ficar mais simples a manipulação 
