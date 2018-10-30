@@ -23,3 +23,10 @@ filter.uf <- function(data, uf) {
 filter.crime <- function(data, crime) {
   return(data %>% filter(tipo_crime == crime));
 }
+
+#' Filtro dos dados por quantidade de ocorrências
+#' @param data Dados a serem filtrados
+#' @param amount
+filter.amount <- function(data, amount) {
+  return(data %>% filter(ocorrencias == amount));
+}
