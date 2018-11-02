@@ -53,7 +53,6 @@ Com estas estatísticas gerais já é possível começar a gerar perguntar para 
 - Qual o tipo de crime tem a maior quantidade de ocorrência no ano de 2013 ?
 - Qual dos meses tem a maior taxa de cada um dos crimes no conjunto de dados ?
 - Quais cidades apresentam as maiores quantidades de cada um dos crimes presentes nos dados ?
-- As informações nas respostas das perguntas anteriores, são revertidas com o passar do tempo ?
 
 As perguntas acima nos guiará com a análise destes dados.
 
@@ -112,5 +111,60 @@ ggplot(crimeAndCityMax, aes(x = municipio, y = contagem, color = municipio)) + g
 
 Com esta visualização é possível entender que, a cidade com maiores registros de estrupo é Sâo Paulo, bem como o Furto de veículo tem as maiores ocorrências no Rio de Janeiro, e assim por diante. 
 
-### Expansão temporal da análise
+## Expansão temporal da análise
 
+Bom, diante aos dados de um único ano obtivemos diversas informações interessantes, porém, vamos avançar! Vamos entender os fenômenos destes dados ao decorrer dos anos.
+
+> Veja que esta avaliação será possível já que o **SINESPJC** disponibiliza uma base de dados de 2004 até 2017.
+
+Vale lembrar que, caso você queira, é possível baixar estes dados utilizando o script disponível no [Github](https://github.com/M3nin0/ocorrencias-brasil/tree/master/recuperacao_dados).
+
+Vamos começar carregando todos os dados
+
+
+```{r}
+allYears <- readAllData();
+```
+
+Beleza! Com os dados carregados, vamos novamente visualizar sua estrutura. Este passo é importante para o entendimento dos dados.
+
+```{r}
+head(allYears, 3);
+```
+
+```{r}
+tail(allYears, 3);
+```
+
+
+Veja que há uma varição grande nos meses e anos e ainda, que a estrutura base é a mesma dos dados vistos para um único ano (2013), vamos então começar esta nova etapa de análise.
+
+Agora, vou criar uma `linha do tempo` variando com a quantidade total de ocorrências em cada um dos anos presentes no conjunto de dados.
+
+```{r}
+allYears <- allYears %>% rowwise() %>% mutate(ano = as.integer(stringr::str_split(mes_ano, '/')[[1]][2]));
+```
+
+Bem, acima apliquei apenas uma função para gerar um coluna com apenas os valores dos anos, vamos agora agrupar os dados pelos anos e então realizar a contagem.
+
+```{r}
+allYearsGroupedByYear <- allYears %>% group_by(ano) %>% summarise(contagem_total = sum(ocorrencias));
+```
+
+Com os dados agrupados, vamos realizar o plot para visualizar o resultado.
+
+```{r}
+ggplot(allYearsGroupedByYear, aes(ano, contagem_total)) + geom_line();
+```
+
+Veja que, ao longo dos anos a quantidade de crimes só aumentou, tendo uma queda em 2017. Veja que, a queda em 2017, pode estar vinculada com os dados que estão disponíveis para este, isto porque, em 2017 nem todos os meses estão disponíveis.
+
+Esta informação é bastante interessante, porém, e com relação a cada um dos crimes ? Qual foi sua variação ao longo dos anos, vamos entender isto agora.
+
+```{r}
+allYersGroupedByYearAndCrime <- allYears %>% group_by(ano, tipo_crime) %>% summarise(contagem_total = sum(ocorrencias));
+
+ggplot(allYersGroupedByYearAndCrime, aes(ano, contagem_total, color = tipo_crime)) + geom_line() + facet_wrap(~ tipo_crime);
+```
+
+Veja que interessante, conseguimos visualizar a variação no tempo de cada um dos tipos de crimes, sendo os que mais variam `Furto, Roubo, Estrupo e Homicídio doloso`.
