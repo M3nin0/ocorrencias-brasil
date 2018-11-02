@@ -47,3 +47,7 @@ Agora que conhecemos a estrutura básica, vamos pegar informações de estatíst
 summary(year2013);
 ```
 
+0eo9gr
+Com estas informações já foi possível perceber a quantidade de ocorrênciasreqwwp09pokkkkkkkkkkk
+
+Ao visualizar este resumo estatístico, percebemos algumas coisas como, a quantidade de cada um dos crimes, 
