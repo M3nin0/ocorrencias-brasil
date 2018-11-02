@@ -24,6 +24,7 @@ Todo o processo da análise destes dados foram documentados para a fácil replic
 Vamos começar carregando os scripts criados para facilitar a análise.
 
 ```{r}
+suppressMessages(library(tidyverse));
 source('data_utils.R');
 source('filter_data.R');
 source('groups.R');
@@ -38,7 +39,7 @@ year2013 <- readSpecificYear(2013);
 Com os dados carregados vamos olhar como é sua estrutura.
 
 ```{r}
-head(year2013);
+head(year2013, 5);
 ```
 
 Agora que conhecemos a estrutura básica, vamos pegar informações de estatísticas gerais destes dados.
@@ -47,7 +48,69 @@ Agora que conhecemos a estrutura básica, vamos pegar informações de estatíst
 summary(year2013);
 ```
 
-0eo9gr
-Com estas informações já foi possível perceber a quantidade de ocorrênciasreqwwp09pokkkkkkkkkkk
+Com estas estatísticas gerais já é possível começar a gerar perguntar para prosseguir com a análise dos dados. Ao olhar estas informações, me veio as seguintes perguntas
 
-Ao visualizar este resumo estatístico, percebemos algumas coisas como, a quantidade de cada um dos crimes, 
+- Qual o tipo de crime tem a maior quantidade de ocorrência no ano de 2013 ?
+- Qual dos meses tem a maior taxa de cada um dos crimes no conjunto de dados ?
+- Quais cidades apresentam as maiores quantidades de cada um dos crimes presentes nos dados ?
+- As informações nas respostas das perguntas anteriores, são revertidas com o passar do tempo ?
+
+As perguntas acima nos guiará com a análise destes dados.
+
+### Crime mais frequente em 2013
+
+Bem vamos começar realizando uma análise dos crimes mais frequentes em 2013. 
+
+```{r}
+tabFreq <- year2013 %>% group_by.crime() %>% summarise(contagem = sum(ocorrencias));
+tabFreq <- tabFreq[order(tabFreq$contagem, decreasing = TRUE), ];
+tabFreq
+```
+
+<!-- Furto e crime são coisas diferentes! Mas aqui devo considerar a mesma coisa ? -->
+
+Veja que neste ano de forma geral o furto de carros foi muito alto! E infelizmente o número de estrupos também foi muito grande. Mas aqui vamos criar uma forma de visualizar estes dados mais facilmente, utilizando um gráfico de barras!
+
+```{r}
+ggplot(tabFreq, aes(tipo_crime, contagem)) + geom_bar(stat = 'identity') + coord_flip();
+```
+
+Veja, a interpretação tornou-se mais simples! Agora que sabemos qual foi o crime mais cometido no ano de 2013, vamos decobrir como foi a distribuição destas quantidades de ocorrências nos meses.
+
+### Meses e suas taxas de crimes (2013)
+
+Para obter esta informação, vamos primeiro agrupar os dados levando em consideração os meses, e então, contar as ocorrências de cada crime.
+
+```{r}
+crimeAndMonth <- year2013 %>% group_by(mes, tipo_crime) %>% summarise(contagem=sum(ocorrencias));
+head(crimeAndMonth, 3);
+```
+
+No caso destes dados há muitos valores, vamos também criar um plot que facilite a visualização e entendimento dos dados.
+
+```{r}
+ggplot(crimeAndMonth, aes(x = mes, y = contagem, color = factor(tipo_crime))) + geom_point();
+```
+
+Veja que, há um certo padrão na distribuição dos dados, onde certos tipos de crimes apresentam valores muito próximos, aqui, conseguimos perceber por exemplo que, o furto de carro ao longo de todo o ano de 2013 foi muito alto, além ainda de crimes de lesão corporal e estrupo, que mantiveram as mesmas quantidades quase durante o ano todo.  
+
+### Crimes por cidade
+
+Vamos agora olhar quais cidades tiveram os maiores índices de cada um dos tipos de crime, no ano de 2013.
+
+```{r}
+crimeAndCity <- year2013 %>% group_by(municipio, tipo_crime) %>% summarise(contagem = sum(ocorrencias));
+
+crimeAndCityMax <- crimeAndCity %>% group_by.crime() %>% summarise(contagem = max(contagem)) %>% inner_join(crimeAndCity);
+```
+
+Pronto! Agora os dados estão agrupados levando em consideração os municípios com a maior quantidade de um determinado tipo de crime, vamos criar uma visualização para facilitar o entendimento dos dados.
+
+```{r}
+ggplot(crimeAndCityMax, aes(x = municipio, y = contagem, color = municipio)) + geom_point() + facet_wrap(~tipo_crime) + theme(axis.text.x  = element_text(angle = 45, hjust = 1));
+```
+
+Com esta visualização é possível entender que, a cidade com maiores registros de estrupo é Sâo Paulo, bem como o Furto de veículo tem as maiores ocorrências no Rio de Janeiro, e assim por diante. 
+
+### Expansão temporal da análise
+

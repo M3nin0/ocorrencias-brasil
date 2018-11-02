@@ -6,8 +6,8 @@ Funções para a leitura, limpeza e organização dos dados utilizados
 #' renomeia as colunas para ficar mais simples a manipulação 
 #'
 transform.column <- function(data) {
-  data$Código.IBGE.Município <- NULL;
-  colnames(data) <- c('regiao', 'sigla_uf', 'uf', 'municipio', 
+  # data$`Código.IBGE.Município` <- NULL;
+  colnames(data) <- c('regiao', 'sigla_uf', 'uf', 'cod_uf', 'municipio', 
                          'tipo_crime', 'mes', 'mes_ano', 'ocorrencias');  
   return(data);
 }
