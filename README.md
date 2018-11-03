@@ -1,6 +1,6 @@
 ## Ocorrências criminais no Brasil :bar_chart:
 
-Análise dos dados disponibilizados pelo Sistema Nacional de Estatásticas de Segurança Pública e Justiça Criminal (**SINESPJC**).
+Análise dos dados disponibilizados pelo Sistema Nacional de Estatísticas de Segurança Pública e Justiça Criminal (**SINESPJC**).
 
 Para acessar o resultado final da análise clink  [aqui](https://ocorrencias-brasil.netlify.com/analyze.html)
 
