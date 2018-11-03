@@ -168,3 +168,24 @@ ggplot(allYersGroupedByYearAndCrime, aes(ano, contagem_total, color = tipo_crime
 ```
 
 Veja que interessante, conseguimos visualizar a variação no tempo de cada um dos tipos de crimes, sendo os que mais variam `Furto, Roubo, Estrupo e Homicídio doloso`.
+
+Ao ver este último gráfico, me surgiu a curiosidade de saber qual os anos apresentaram os maiores números de ocorrências para cada um dos crimes. Vamos fazer isto então. 
+
+
+```{r}
+crimeAndYear <- allYears %>% group_by(ano, tipo_crime) %>% summarise(qtd = sum(ocorrencias)); 
+crimeAndYearMax <- crimeAndYear %>% group_by.crime() %>% summarise(qtd = max(qtd)) %>% inner_join(crimeAndYear);
+```
+
+Bem acima apenas agrupei os dados, vamos agora realizar o plot para obter as informações de cada um dos anos e seus crimes.
+
+
+```{r}
+ggplot(crimeAndYearMax, aes(ano, qtd, color = tipo_crime)) + geom_point();
+```
+
+Como podemos ver no gráfico acima, para todos os crimes, os maiores índices estão entre 2010 e 2016, o que demonstra que este período de tempo representaram muito mais violência que qualquer outro desde 2004.
+
+## Agrupamento dos dados utilizando SOM
+
+Como forma de entender melhor as características dos dados, farei a utilização dos mapas de Kohonen para o agrupamento dos dados por características, e assim verificar se novas características passíveis de serem análisadas podem aparecer.
