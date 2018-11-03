@@ -2,7 +2,7 @@
 
 Análise dos dados disponibilizados pelo Sistema Nacional de Estatísticas de Segurança Pública e Justiça Criminal (**SINESPJC**).
 
-Para acessar o resultado final da análise clink  [aqui](https://ocorrencias-brasil.netlify.com/analyze.html)
+Para acessar o resultado final da análise clique  [aqui](https://ocorrencias-brasil.netlify.com/analyze.html)
 
 ## Sobre :grey_question:
 
