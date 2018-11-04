@@ -24,6 +24,8 @@ Todo o processo da análise destes dados foram documentados para a fácil replic
 Vamos começar carregando os scripts criados para facilitar a análise.
 
 ```{r}
+options(warn = -1) 
+
 suppressMessages(library(tidyverse));
 source('data_utils.R');
 source('filter_data.R');
@@ -185,6 +187,8 @@ ggplot(crimeAndYearMax, aes(ano, qtd, color = tipo_crime)) + geom_point();
 ```
 
 Como podemos ver no gráfico acima, para todos os crimes, os maiores índices estão entre 2010 e 2016, o que demonstra que este período de tempo representaram muito mais violência que qualquer outro desde 2004.
+
+É importante nos atentarmos aos crimes de lesão corporal e latrocínio, que em todos os resultados apareceram em baixa, isto pode realmente ocorrer, ou mesmo falta de dados podem estar causando caractarística.
 
 ## Agrupamento dos dados utilizando SOM
 
