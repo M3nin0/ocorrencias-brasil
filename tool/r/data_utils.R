@@ -15,7 +15,7 @@ transform.column <- function(data) {
 #' Função para a leitura de todos os dados do diretório `data`
 #' @return data.frame
 readAllData <- function(){
-  path <- '../dados/';
+  path <- './dados/';
   files <- dir(path);
   allData <- data.frame();
   
@@ -32,7 +32,7 @@ readAllData <- function(){
 #' Função para a leitura de um ano específico de ocorrências
 #' @return data.frame
 readSpecificYear <- function(year) {
-  path <- '../dados/';
+  path <- './dados/';
   files <- dir(path);
   
   for (f in files) {
